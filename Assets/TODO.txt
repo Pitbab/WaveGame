@@ -1,0 +1,67 @@
+- Pooling                                                                           
+- enemies health / ammo dmg
+- player health / loose condition
+- gun reloading
+- score / currency
+- better spawn / more complex wave
+- more enemies type
+- more guns type
+- power up
+- classes
+- purchases
+- perks
+- door / traps
+- classes
+
+**if all of the above is done**
+start network
+
+
+------------------------------------------------------ dev log ---------------------------------------------------
+
+
+* monday april 18 2022 project started
+
+- basic character controller
+- laser pointer
+- new input system implementation
+
+//problematics at the end of the day
+
+- character rotation with mouse in a 3d environment (solved april 19)
+
+* tuesday april 19 
+
+- character rotation (solve with raycast.hitpoint from the camera to the ground) 
+- camera follow with smooth travelling
+- basic mob
+- first gun
+- basic state machine for the player 
+- first stress test to find max mob count
+- interaction system
+
+//problematics at the end of the day
+
+- need better optimization for the rendering (solved april 20)
+- better character animation blend (unsolved)
+
+* wednesday april 20
+
+- added dynamic batching to mobs and bullet to decrease of batch call 
+- basic wave system
+- better gun system (can switch gun, different bullet spread)
+- player model import
+- gun hovering
+
+* thursday april 21
+
+- basic pool system for bullets and mobs
+
+//problematics at the end of the day
+
+- left aiming is not accurate (unsolved)
+
+
+
+
+

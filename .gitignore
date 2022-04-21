@@ -1,0 +1,11 @@
+/.idea/
+/Logs/
+/obj/
+/Library/
+/UserSettings/
+Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
+Assembly-CSharp-firstpass.csproj
+Polyperfect.common.csproj
+Polyperfect.People.csproj
+wave.sln
