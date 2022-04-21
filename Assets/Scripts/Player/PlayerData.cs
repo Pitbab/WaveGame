@@ -7,6 +7,9 @@ public class PlayerData : ScriptableObject
 {
     [Range(0f, 100f)]
     public float speed;
+    
+    [Range(0f, 100f)]
+    public float health;
 
     [Range(0f, 10f)]
     public float detectionRange;

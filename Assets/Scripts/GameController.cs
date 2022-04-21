@@ -52,5 +52,10 @@ public class GameController : MonoBehaviour
     {
         return players.ToArray();
     }
+
+    public Camera GetPlayerCam()
+    {
+        return players[0].GetComponent<PlayerController>().playerCam;
+    }
     
 }

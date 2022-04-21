@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     #region Components
 
     [SerializeField] private Camera cam;
+    public Camera playerCam;
     [SerializeField] private Transform laser;
     [SerializeField] private Transform gunHolder;
     public Transform gunHolderRef { get; private set; }
@@ -44,6 +45,12 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region Local Varaibles from data
+
+    private float localHealth;
+
+    #endregion
+
     #region Unity Callback Functions
 
     private void Awake()
@@ -65,6 +72,9 @@ public class PlayerController : MonoBehaviour
         gunHolderRef = gunHolder;
         bulletPool = transform.parent.Find("BulletPool").GetComponent<BulletPool>();
         playerLayer = LayerMask.GetMask("Player");
+
+        localHealth = playerData.health;
+        playerCam = cam;
         
         stateMachine.Initialize(idleState);
 
@@ -125,6 +135,22 @@ public class PlayerController : MonoBehaviour
             currentGun.Drop();
         }
         currentGun = gun;
+    }
+
+    public void TakeDamage(float amount)
+    {
+        float healthLeft = localHealth - amount;
+
+        if (healthLeft < 0)
+        {
+            //death
+            Debug.Log("You are dead!");
+        }
+        else
+        {
+            Debug.Log("you took : " + amount + " damage");
+            localHealth = healthLeft;
+        }
     }
     
     #endregion

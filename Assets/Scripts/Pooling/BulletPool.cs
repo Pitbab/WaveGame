@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class BulletPool : Pool
 {
-    public void ShootABullet(Vector3 pos, Quaternion rot)
+    public void ShootABullet(Vector3 pos, Quaternion rot, GunData bulletInfo)
     {
         Bullet bullet = GetAPoolObject() as Bullet;
         bullet.transform.position = pos;
         bullet.transform.rotation = rot;
-        bullet.ResetBullet();
+        bullet.ResetBullet(bulletInfo.ammoDamage);
 
     }
 }

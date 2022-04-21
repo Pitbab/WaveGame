@@ -56,10 +56,15 @@ start network
 * thursday april 21
 
 - basic pool system for bullets and mobs
+- enemies health (take dmg)
+- player health (take dmg)
+- basic hp display for enemies
+- door interaction
 
 //problematics at the end of the day
 
 - left aiming is not accurate (unsolved)
+- hp display not facing camera (unsolved)
 
 
 

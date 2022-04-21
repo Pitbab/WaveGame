@@ -1,13 +1,14 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class MobController : PoolItem
 {
     [SerializeField] private MobData mobData;
+    [SerializeField] private GameObject hpSlider;
+    private Vector3 hpStartingScale;
     private NavMeshAgent navMesh;
     private CharacterController characterController;
 
@@ -15,14 +16,21 @@ public class MobController : PoolItem
     Transform bestTarget = null;
 
     private float timer;
-    
+
+    private float localHealth;
+
+    private void Awake()
+    {
+        hpStartingScale = new Vector3(1.01f, 1.01f, 1.01f);
+    }
 
     private void Start()
     {
+        localHealth = mobData.health;
+        
         timer = 0;
         characterController = GetComponent<CharacterController>();
         navMesh = GetComponent<NavMeshAgent>();
-        //InvokeRepeating("SetDestination", 0f, mobData.targetUpdateTime);
     }
 
     private void Update()
@@ -36,10 +44,11 @@ public class MobController : PoolItem
             else
             {
                 SetDestination();
+                Attack();
                 timer = 0;
             }
+            
         }
-
     }
 
 
@@ -67,4 +76,42 @@ public class MobController : PoolItem
         return bestTarget;
     }
 
+    public void ResetMob()
+    {
+        localHealth = mobData.health;
+        hpSlider.transform.localScale = hpStartingScale;
+    }
+
+    private void Attack()
+    {
+        Ray ray = new Ray(transform.position, Vector3.forward);
+        
+        if(Physics.Raycast(ray, out RaycastHit hit, mobData.attackRange, mobData.whatIsPlayer))
+        {
+            hit.collider.gameObject.GetComponent<PlayerController>().TakeDamage(mobData.attackDamage);
+        }
+    }
+
+    public void TakeDamage(float amount)
+    {
+        float hpLeft = localHealth -= amount;
+
+        if (hpLeft < 0)
+        {
+            SpawnerManager.instance.numberAlive--;
+            Remove();
+        }
+        else
+        {
+            localHealth = hpLeft;
+            hpSlider.transform.localScale = new Vector3((localHealth / mobData.health) * hpStartingScale.x,
+                hpStartingScale.y, hpStartingScale.z);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, mobData.attackRange);
+    }
 }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Player1
   m_EditorClassIdentifier: 
   speed: 12.5
+  health: 100
   detectionRange: 3
   gravity: -20
   WhatisInteractible:

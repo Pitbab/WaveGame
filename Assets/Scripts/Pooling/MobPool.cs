@@ -9,5 +9,6 @@ public class MobPool : Pool
         MobController mob = GetAPoolObject() as MobController;
         mob.transform.position = pos;
         mob.transform.rotation = rot;
+        mob.ResetMob();
     }
 }

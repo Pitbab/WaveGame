@@ -9,6 +9,7 @@ public class Bullet : PoolItem
     private int mobLayer;
     private const float maxTimeActive = 2f;
     private float currentActiveTime;
+    private float damage;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -16,11 +17,13 @@ public class Bullet : PoolItem
 
     }
 
-    public void ResetBullet()
+    public void ResetBullet(float damageAmount)
     {
+        damage = damageAmount;
         rb.velocity = Vector3.zero;
         rb.AddForce(transform.forward * 100, ForceMode.Impulse);
         currentActiveTime = 0;
+        
     }
 
     private void Update()
@@ -37,10 +40,8 @@ public class Bullet : PoolItem
     {
         if (other.gameObject.layer == mobLayer)
         {
-            SpawnerManager.instance.numberAlive--;
+            other.gameObject.GetComponent<MobController>().TakeDamage(damage);
             Remove();
-            other.gameObject.GetComponent<MobController>().Remove();
-            //----//Destroy(other.gameObject);
         }
     }
     

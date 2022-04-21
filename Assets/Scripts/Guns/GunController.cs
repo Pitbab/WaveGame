@@ -56,7 +56,7 @@ public class GunController : Interactible
             lastShot = 0;
             foreach (var choke in SpreadPattern)
             {
-                owner.bulletPool.ShootABullet(choke.position, choke.rotation);
+                owner.bulletPool.ShootABullet(choke.position, choke.rotation, gunData);
                 //Destroy(Instantiate(gunData.ammoPrefab, choke.position, choke.rotation), 2f);
             }
         }
