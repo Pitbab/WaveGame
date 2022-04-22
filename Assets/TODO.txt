@@ -43,7 +43,7 @@ start network
 //problematics at the end of the day
 
 - need better optimization for the rendering (solved april 20)
-- better character animation blend (unsolved)
+- bug better character animation blend (unsolved)
 
 * wednesday april 20
 
@@ -63,8 +63,11 @@ start network
 
 //problematics at the end of the day
 
-- left aiming is not accurate (unsolved)
-- hp display not facing camera (unsolved)
+- bug left aiming is not accurate (unsolved)
+- bug GC problem (unsolved)
+- bug nav mesh ai need optimisation (unsolved)
+- bug collisions between mobs are clumsy (unsolved)
+
 
 
 

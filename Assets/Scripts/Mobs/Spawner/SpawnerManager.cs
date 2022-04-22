@@ -62,17 +62,12 @@ public class SpawnerManager : MonoBehaviour
             spawners[Random.Range(0, spawners.Count)].Spawn(mobsPrefabs[0]);
             currentSpawned++;
         }
-        else
-        {
-            Debug.Log("every mobs spawned");
-            //finished wave
-        }
     }
 
     public void StartWave(int level)
     {
         currentSpawned = 0;
-        numberAlive = level * 100;
+        numberAlive = level * 1000;
         totalThisWave = numberAlive;
         StartCoroutine(WaveUpdate());
 
@@ -82,7 +77,7 @@ public class SpawnerManager : MonoBehaviour
     {
         while (numberAlive > 0)
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.02f);
             SpawnAtRandom();
         }
 
