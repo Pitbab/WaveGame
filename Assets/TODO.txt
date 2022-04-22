@@ -68,6 +68,14 @@ start network
 - bug nav mesh ai need optimisation (unsolved)
 - bug collisions between mobs are clumsy (unsolved)
 
+* friday april 22
+
+- added zombie skin
+
+//problematics at the end of the day
+
+- bug animation takes too much power to compute (unsolved)
+
 
 
 

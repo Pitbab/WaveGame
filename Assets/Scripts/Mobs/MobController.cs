@@ -1,16 +1,13 @@
-using System;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 public class MobController : PoolItem
 {
     [SerializeField] private MobData mobData;
     [SerializeField] private GameObject hpSlider;
+    [SerializeField] private Animator animator;
     private Vector3 hpStartingScale;
     private NavMeshAgent navMesh;
-    private CharacterController characterController;
 
     private float smallestDist;
     Transform bestTarget = null;
@@ -29,8 +26,8 @@ public class MobController : PoolItem
         localHealth = mobData.health;
         
         timer = 0;
-        characterController = GetComponent<CharacterController>();
         navMesh = GetComponent<NavMeshAgent>();
+        animator.SetBool("isRunning", true);
     }
 
     private void Update()
@@ -84,7 +81,7 @@ public class MobController : PoolItem
 
     private void Attack()
     {
-        Ray ray = new Ray(transform.position, Vector3.forward);
+        Ray ray = new Ray(transform.position, transform.forward);
         
         if(Physics.Raycast(ray, out RaycastHit hit, mobData.attackRange, mobData.whatIsPlayer))
         {
@@ -113,5 +110,7 @@ public class MobController : PoolItem
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, mobData.attackRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, transform.forward * mobData.attackRange);
     }
 }

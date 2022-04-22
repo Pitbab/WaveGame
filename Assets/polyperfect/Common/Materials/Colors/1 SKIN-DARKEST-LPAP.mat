@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _SHADING_FLAT _WAVES_HIGHQUALITY _ZWRITE_ON
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -152,3 +152,4 @@ Material:
     - _SpecColor: {r: 0.07352942, g: 0.07352942, b: 0.07352942, a: 1}
     - _Sun: {r: 0, g: 0, b: 0, a: 0}
     - _SunColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

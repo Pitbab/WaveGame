@@ -67,7 +67,7 @@ public class SpawnerManager : MonoBehaviour
     public void StartWave(int level)
     {
         currentSpawned = 0;
-        numberAlive = level * 1000;
+        numberAlive = level * 500;
         totalThisWave = numberAlive;
         StartCoroutine(WaveUpdate());
 
