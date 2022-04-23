@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     #region Components
 
     [SerializeField] private Camera cam;
-    public Camera playerCam;
     [SerializeField] private Transform laser;
     [SerializeField] private Transform gunHolder;
     public Transform gunHolderRef { get; private set; }
@@ -20,8 +19,8 @@ public class PlayerController : MonoBehaviour
     public CharacterController characterController { get; private set; }
 
     private GunController currentGun;
-    
     public BulletPool bulletPool { get; private set; }
+    public PlayerUIController playerUi { get; private set; }
 
     #endregion
 
@@ -45,9 +44,10 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    #region Local Varaibles from data
+    #region Local Varaibles
 
     private float localHealth;
+    public int localCash { get; private set; }
 
     #endregion
 
@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
 
         idleState = new IdleState(this, stateMachine, playerData, "Idle");
         movingState = new MovingState(this, stateMachine, playerData, "Moving");
+        playerUi = transform.parent.Find("PlayerUI").GetComponent<PlayerUIController>();
     }
 
     private void Start()
@@ -72,10 +73,9 @@ public class PlayerController : MonoBehaviour
         gunHolderRef = gunHolder;
         bulletPool = transform.parent.Find("BulletPool").GetComponent<BulletPool>();
         playerLayer = LayerMask.GetMask("Player");
-
-        localHealth = playerData.health;
-        playerCam = cam;
         
+        SetHp(playerData.health);
+
         stateMachine.Initialize(idleState);
 
     }
@@ -137,20 +137,41 @@ public class PlayerController : MonoBehaviour
         currentGun = gun;
     }
 
-    public void TakeDamage(float amount)
+    private void SetHp(float hp)
     {
-        float healthLeft = localHealth - amount;
+        localHealth = hp;
+        playerUi.OnHpChange?.Invoke(localHealth);
+    }
 
-        if (healthLeft < 0)
+    public void ChangeHp(float amount)
+    {
+
+        float result;
+
+        if (localHealth + amount < 0)
         {
-            //death
+            result = 0;
             Debug.Log("You are dead!");
+            SetHp(0);
+            
+        }
+        else if(localHealth + amount > playerData.health)
+        {
+            result = playerData.health;
         }
         else
         {
-            Debug.Log("you took : " + amount + " damage");
-            localHealth = healthLeft;
+            result = localHealth + amount;
         }
+        
+        SetHp(result);
+
+    }
+
+    public void SetCash(int amount)
+    {
+        localCash += amount;
+        playerUi.OnCashChange?.Invoke(EventID.Cash, localCash);
     }
     
     #endregion

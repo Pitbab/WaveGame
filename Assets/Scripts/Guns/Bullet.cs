@@ -10,10 +10,13 @@ public class Bullet : PoolItem
     private const float maxTimeActive = 2f;
     private float currentActiveTime;
     private float damage;
+
+    private PlayerController owner;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         mobLayer = LayerMask.NameToLayer("Mobs");
+        owner = transform.parent.GetComponent<BulletPool>().owner;
 
     }
 
@@ -40,7 +43,8 @@ public class Bullet : PoolItem
     {
         if (other.gameObject.layer == mobLayer)
         {
-            other.gameObject.GetComponent<MobController>().TakeDamage(damage);
+            MobController mob = other.gameObject.GetComponent<MobController>();
+            mob.TakeDamage(damage, owner);
             Remove();
         }
     }

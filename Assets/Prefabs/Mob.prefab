@@ -384,6 +384,36 @@ Transform:
   m_Father: {fileID: 5920394323076281739}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1096556999634279761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 336778078050537817}
+  m_Layer: 9
+  m_Name: AttackZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &336778078050537817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096556999634279761}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.144, z: 1.013}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8982518982796613675}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1155935383771640659
 GameObject:
   m_ObjectHideFlags: 0
@@ -2900,6 +2930,7 @@ GameObject:
   - component: {fileID: 8982518982796613672}
   - component: {fileID: 8982518982796613677}
   - component: {fileID: 8982518982796613676}
+  - component: {fileID: 5480860439904000351}
   m_Layer: 9
   m_Name: Mob
   m_TagString: Untagged
@@ -2920,6 +2951,7 @@ Transform:
   m_Children:
   - {fileID: 2048877914671913140}
   - {fileID: 8663140797157513101}
+  - {fileID: 336778078050537817}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2944,21 +2976,21 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8982518982796613671}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.53
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 10
+  m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 500
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 1
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &8982518982796613676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2973,7 +3005,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mobData: {fileID: 11400000, guid: 0fe0f8752c5492b408a1d14a3ac266ed, type: 2}
   hpSlider: {fileID: 940840324398933188}
-  animator: {fileID: 1041458869893527102}
+  animator: {fileID: 5480860439904000351}
+  skRenderer: {fileID: 4291338024271129322}
+  attackZone: {fileID: 336778078050537817}
+--- !u!95 &5480860439904000351
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8982518982796613671}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a4a3ba617ed9c5946bb76844ec1ef299, type: 3}
+  m_Controller: {fileID: 9100000, guid: 50b851570ec387e4fa3c819637700de6, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9095538665779331946
 GameObject:
   m_ObjectHideFlags: 0
@@ -3076,7 +3129,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9200014378562352746}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: a4a3ba617ed9c5946bb76844ec1ef299, type: 3}
   m_Controller: {fileID: 9100000, guid: 50b851570ec387e4fa3c819637700de6, type: 2}
   m_CullingMode: 1

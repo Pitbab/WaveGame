@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,8 +11,10 @@ public class GunController : Interactible
     [SerializeField] private List<Transform> SpreadPattern = new List<Transform>();
 
 
-    protected int currentMag;
-    protected float lastShot;
+    private int currentMag;
+    private float lastShot;
+    
+    public bool isReloading { get; private set; }
     public bool isPickedUp;
     private PlayerController owner;
 
@@ -30,6 +33,7 @@ public class GunController : Interactible
     {
         startingPos = transform.position;
         lastShot = gunData.fireRate;
+        currentMag = gunData.magCapacity;
         isPickedUp = false;
     }
 
@@ -42,7 +46,6 @@ public class GunController : Interactible
 
         if (!isPickedUp)
         {
-
             transform.position = startingPos + Vector3.up * maxTranslation * Mathf.Cos(Time.time);
             transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
         }
@@ -101,4 +104,19 @@ public class GunController : Interactible
         transform.parent = null;
         startingPos = transform.position;
     }
+
+    public void Reload()
+    {
+        isReloading = true;
+        StartCoroutine(ReloadTime());
+
+    }
+
+    private IEnumerator ReloadTime()
+    {
+        yield return new WaitForSeconds(gunData.reloadTime);
+        currentMag = gunData.magCapacity;
+        isReloading = false;
+    }
+    
 }

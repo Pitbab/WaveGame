@@ -21,4 +21,7 @@ public class MobData : ScriptableObject
     public float attackRange;
 
     public LayerMask whatIsPlayer;
+
+    public int cashOnTouched = 1;
+    public int cashOnKill = 100;
 }

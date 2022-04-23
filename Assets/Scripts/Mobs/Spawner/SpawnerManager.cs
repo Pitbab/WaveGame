@@ -13,14 +13,11 @@ public class SpawnerManager : MonoBehaviour
     public MobPool mobPool {get; private set; }
     
     private List<Spawner> spawners = new List<Spawner>();
+    public List<Spawner> availableSpawners = new List<Spawner>();
     [SerializeField] private List<GameObject> mobsPrefabs = new List<GameObject>();
-    public int numberAlive;
+    public int numberAlive { get; private set; }
     private int currentSpawned;
     private int totalThisWave;
-    [SerializeField] private TMP_Text fpsText;
-    [SerializeField] private TMP_Text numberText;
-    private float hudUpdate = 1f;
-    private float timer = 0;
 
     private void Awake()
     {
@@ -44,22 +41,11 @@ public class SpawnerManager : MonoBehaviour
         spawners = s.ToList();
     }
 
-    private void Update()
-    {
-        if (Time.unscaledTime > timer)
-        {
-            int fps = (int)(1f / Time.unscaledDeltaTime);
-            fpsText.text = "FPS: " + fps;
-            timer = Time.unscaledTime + hudUpdate;
-            numberText.text = "Number alive : " + numberAlive;
-        }
-    }
-
     private void SpawnAtRandom()
     {
         if (totalThisWave > currentSpawned)
         {
-            spawners[Random.Range(0, spawners.Count)].Spawn(mobsPrefabs[0]);
+            availableSpawners[Random.Range(0, availableSpawners.Count)].Spawn(mobsPrefabs[0]);
             currentSpawned++;
         }
     }
@@ -67,8 +53,10 @@ public class SpawnerManager : MonoBehaviour
     public void StartWave(int level)
     {
         currentSpawned = 0;
-        numberAlive = level * 500;
+        numberAlive = level * 1;
         totalThisWave = numberAlive;
+        GameController.instance.player.playerUi.OnNumberAliveChange?.Invoke(EventID.Alive, numberAlive);
+
         StartCoroutine(WaveUpdate());
 
     }
@@ -83,5 +71,13 @@ public class SpawnerManager : MonoBehaviour
 
         StartCoroutine(GameController.instance.PreRound());
         Debug.Log("wave finished");
+        
+    }
+
+    public void RemoveMobFromCounter()
+    {
+        numberAlive--;
+        GameController.instance.player.playerUi.OnNumberAliveChange?.Invoke(EventID.Alive, numberAlive);
+        //invoke ui alive change
     }
 }

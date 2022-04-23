@@ -6,25 +6,56 @@ using UnityEngine.AI;
 
 public class Door : Interactible
 {
-    public Vector3 detectionZone;
+    [SerializeField] private int price;
 
-    [SerializeField] private MeshRenderer meshRenderer;
-    [SerializeField] private MeshCollider meshCollider;
-    [SerializeField] private NavMeshObstacle obstacle;
+    [SerializeField] private string Infos;
+    [SerializeField] private List<Spawner> spawnerInRoom = new List<Spawner>();
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(meshRenderer.bounds.center, detectionZone);
-    }
+    private PlayerController currentPlayer;
 
     public override void Interact(PlayerController actor)
     {
         base.Interact(actor);
-        meshCollider.enabled = false;
-        meshRenderer.enabled = false;
-        obstacle.enabled = false;
+
+        if (actor.localCash > price)
+        {
+            actor.SetCash(-price);
+            RemoveText(actor);
+            gameObject.SetActive(false);
+            
+            foreach (var spawner in spawnerInRoom)
+            {
+                if (spawner != null)
+                {
+                    spawner.isAvailable = true;
+                    SpawnerManager.instance.availableSpawners.Add(spawner);
+                }
+            }
+        }
 
 
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            currentPlayer = other.gameObject.GetComponent<PlayerController>();
+            currentPlayer.playerUi.SetInfo(Infos);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (currentPlayer != null && other.gameObject == currentPlayer.gameObject)
+        {
+            RemoveText(currentPlayer);
+        }
+    }
+
+    private void RemoveText(PlayerController actor)
+    {
+        actor.playerUi.SetInfo("");
     }
 }

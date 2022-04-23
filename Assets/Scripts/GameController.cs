@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour
     
     public static GameController instance { get; private set; }
 
+    public PlayerController player { get; private set; }
+
     private const float preRoundTimer = 5f;
     private int currentWave = 0;
 
@@ -26,16 +28,11 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(instance);
     }
 
-    private List<Transform> players = new List<Transform>();
+    private List<Transform> playersPos = new List<Transform>();
 
     private void Start()
     {
-        PlayerController[] p = FindObjectsOfType<PlayerController>();
-
-        foreach (var player in p)
-        {
-            players.Add(player.transform);
-        }
+        player = FindObjectOfType<PlayerController>();
 
         StartCoroutine(PreRound());
     }
@@ -43,19 +40,12 @@ public class GameController : MonoBehaviour
     public IEnumerator PreRound()
     {
         currentWave++;
+        
+        player.playerUi.OnRoundChange?.Invoke(EventID.Round, currentWave);
+        
         yield return new WaitForSeconds(preRoundTimer);
         SpawnerManager.instance.StartWave(currentWave);
         
     }
 
-    public Transform[] GetPlayersPos()
-    {
-        return players.ToArray();
-    }
-
-    public Camera GetPlayerCam()
-    {
-        return players[0].GetComponent<PlayerController>().playerCam;
-    }
-    
 }
