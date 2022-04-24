@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
     #region Local Varaibles
 
     private float localHealth;
+    public float maxHealth => playerData.health;
     public int localCash { get; private set; }
 
     #endregion
@@ -189,7 +190,7 @@ public class PlayerController : MonoBehaviour
     
     public void Shoot()
     {
-        if (currentGun != null)
+        if (currentGun != null && !currentGun.isReloading)
         {
             currentGun.Shoot();
         }
@@ -210,6 +211,14 @@ public class PlayerController : MonoBehaviour
             break;
         }
 
+    }
+
+    public void Reload()
+    {
+        if (currentGun != null && !currentGun.isReloading)
+        {
+            currentGun.Reload();
+        }
     }
     #endregion
 

@@ -12,6 +12,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool isShooting { get; private set; }
     
     public bool isInteracting { get; private set; }
+    public bool isReloading { get; private set; }
 
     public PlayerInput playerInput;
 
@@ -46,6 +47,11 @@ public class PlayerInputHandler : MonoBehaviour
         {
             isInteracting = true;
         }
+    }
+
+    public void OnReload(InputAction.CallbackContext context)
+    {
+        isReloading = context.ReadValueAsButton();
     }
 
     public void UseInteract() => isInteracting = false;

@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
 
     private const float preRoundTimer = 5f;
     private int currentWave = 0;
+    public int scoreMultiplier = 1;
 
     private void Awake()
     {

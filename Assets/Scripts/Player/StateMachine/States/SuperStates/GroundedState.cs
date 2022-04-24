@@ -8,6 +8,7 @@ public class GroundedState : PlayerState
     protected Vector2 mouseInput;
     protected bool canShoot;
     protected bool interaction;
+    protected bool reloading;
 
     public GroundedState(PlayerController playerController, StateMachine stateMachine, PlayerData playerData, string animationBool) : base(playerController, stateMachine, playerData, animationBool) {}
 
@@ -23,6 +24,7 @@ public class GroundedState : PlayerState
         mouseInput = playerController.playerInputHandler.mousePos;
         canShoot = playerController.playerInputHandler.isShooting;
         interaction = playerController.playerInputHandler.isInteracting;
+        reloading = playerController.playerInputHandler.isReloading;
 
         if (canShoot)
         {
@@ -32,6 +34,11 @@ public class GroundedState : PlayerState
         if (interaction)
         {
             playerController.Interact();
+        }
+
+        if (reloading)
+        {
+            playerController.Reload();
         }
         
         playerController.SetRot(mouseInput);

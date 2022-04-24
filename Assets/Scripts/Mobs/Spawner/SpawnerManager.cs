@@ -74,6 +74,11 @@ public class SpawnerManager : MonoBehaviour
         
     }
 
+    public void SpawnPowerUp()
+    {
+        
+    }
+
     public void RemoveMobFromCounter()
     {
         numberAlive--;

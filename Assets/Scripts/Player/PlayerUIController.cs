@@ -16,6 +16,8 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField] private TMP_Text numberAlive;
     [SerializeField] private TMP_Text cash;
     [SerializeField] private TMP_Text info;
+    [SerializeField] private TMP_Text mag;
+    [SerializeField] private TMP_Text reserve;
 
     private Dictionary<EventID, TMP_Text> UiText = new Dictionary<EventID, TMP_Text>();
 
@@ -27,6 +29,7 @@ public class PlayerUIController : MonoBehaviour
     public Action<EventID, int> OnCashChange;
     public Action<EventID, int> OnNumberAliveChange;
     public Action<EventID, int> OnRoundChange;
+    //public Action<EventID, int> OnMagChange;
 
     #endregion
 
@@ -38,6 +41,7 @@ public class PlayerUIController : MonoBehaviour
         UiText.Add(EventID.Round, currentRound);
         UiText.Add(EventID.Alive, numberAlive);
         UiText.Add(EventID.Cash, cash);
+        //UiText.Add(EventID.reload, mag);
 
         OnRoundChange += SetText;
         OnCashChange += SetText;
@@ -63,6 +67,12 @@ public class PlayerUIController : MonoBehaviour
 
     #region Components Setter
 
+    public void SetGunMag(int current, int maxCap)
+    {
+        mag.text = current.ToString();
+        reserve.text = "/ " + maxCap;
+    }
+    
     private void SetText(EventID key, int value)
     {
         UiText[key].text = key + " : " + value;

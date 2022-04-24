@@ -12,6 +12,7 @@ public class GunController : Interactible
 
 
     private int currentMag;
+    private int currentReserve;
     private float lastShot;
     
     public bool isReloading { get; private set; }
@@ -34,6 +35,7 @@ public class GunController : Interactible
         startingPos = transform.position;
         lastShot = gunData.fireRate;
         currentMag = gunData.magCapacity;
+        currentReserve = gunData.maxReserve;
         isPickedUp = false;
     }
 
@@ -54,14 +56,20 @@ public class GunController : Interactible
 
     public void Shoot()
     {
-        if (lastShot >= gunData.fireRate)
+        if (!(lastShot >= gunData.fireRate)) return;
+
+        if (currentMag == 0)
         {
-            lastShot = 0;
-            foreach (var choke in SpreadPattern)
-            {
-                owner.bulletPool.ShootABullet(choke.position, choke.rotation, gunData);
-                //Destroy(Instantiate(gunData.ammoPrefab, choke.position, choke.rotation), 2f);
-            }
+            Reload();
+            return;
+        }
+        
+        lastShot = 0;
+        foreach (var choke in SpreadPattern)
+        {
+            owner.bulletPool.ShootABullet(choke.position, choke.rotation, gunData);
+            currentMag -= 1;
+            owner.playerUi.SetGunMag(currentMag, currentReserve);
         }
 
     }
@@ -76,6 +84,8 @@ public class GunController : Interactible
             highlight.SetActive(false);
             owner = actor;
             isPickedUp = true;
+            owner.playerUi.SetGunMag(currentMag, currentReserve);
+            
             transform.position = actor.gunHolderRef.position;
             transform.rotation = actor.transform.rotation;
             transform.parent = actor.gunHolderRef;
@@ -107,6 +117,7 @@ public class GunController : Interactible
 
     public void Reload()
     {
+        Debug.Log("reloading");
         isReloading = true;
         StartCoroutine(ReloadTime());
 
@@ -115,7 +126,25 @@ public class GunController : Interactible
     private IEnumerator ReloadTime()
     {
         yield return new WaitForSeconds(gunData.reloadTime);
-        currentMag = gunData.magCapacity;
+
+        int result = currentReserve - (gunData.magCapacity - currentMag );
+        
+        if (result >= 0)
+        {
+            currentReserve -= gunData.magCapacity - currentMag;
+            currentMag = gunData.magCapacity;
+
+        }
+        else
+        {
+            currentMag = gunData.magCapacity + result;
+            currentReserve = 0;
+        }
+
+
+
+        //currentMag = gunData.magCapacity;
+        owner.playerUi.SetGunMag(currentMag, currentReserve);
         isReloading = false;
     }
     

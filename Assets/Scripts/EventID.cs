@@ -3,5 +3,6 @@ public enum EventID
 {
     Round,
     Cash,
-    Alive
+    Alive,
+    reload,
 }

@@ -38,31 +38,29 @@ public class MobController : PoolItem
 
     private void Update()
     {
-        if (gameObject.activeInHierarchy)
+        if (!gameObject.activeInHierarchy) return;
+        
+        if (timer < mobData.targetUpdateTime)
         {
-            if (timer < mobData.targetUpdateTime)
+            timer += Time.deltaTime;
+        }
+        else
+        {
+            if (Vector3.Distance(transform.position, target.transform.position) <= mobData.attackRange)
             {
-                timer += Time.deltaTime;
+                animator.SetBool("isAttacking", true);
+                navMesh.avoidancePriority = 200;
             }
             else
             {
-                if (Vector3.Distance(transform.position, target.transform.position) <= mobData.attackRange)
-                {
-                    animator.SetBool("isAttacking", true);
-                    navMesh.avoidancePriority = 200;
-                }
-                else
-                {
-                    navMesh.avoidancePriority = 50;
-                    animator.SetBool("isAttacking", false);
-                    navMesh.SetDestination(target.transform.position);
-                }
-                timer = 0;
+                navMesh.avoidancePriority = 50;
+                animator.SetBool("isAttacking", false);
+                navMesh.SetDestination(target.transform.position);
             }
-
-            animator.enabled = skRenderer.isVisible;
-
+            timer = 0;
         }
+
+        animator.enabled = skRenderer.isVisible;
     }
     
     /// <summary>
@@ -118,14 +116,14 @@ public class MobController : PoolItem
 
         if (hpLeft <= 0)
         {
-            Dealer.SetCash(mobData.cashOnKill);
+            Dealer.SetCash(mobData.cashOnKill * GameController.instance.scoreMultiplier);
             SpawnerManager.instance.RemoveMobFromCounter();
             navMesh.enabled = false;
-            Remove();
+            Remove(); 
         }
         else
         {
-            Dealer.SetCash(mobData.cashOnTouched);
+            Dealer.SetCash(mobData.cashOnTouched * GameController.instance.scoreMultiplier);
             localHealth = hpLeft;
             hpSlider.transform.localScale = new Vector3((localHealth / mobData.health) * hpStartingScale.x,
                 hpStartingScale.y, hpStartingScale.z);
