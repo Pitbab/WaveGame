@@ -21,17 +21,4 @@ public abstract class PowerUp : MonoBehaviour
             TakePowerUp(other.gameObject.GetComponent<PlayerController>());
         }
     }
-
-    private void Start()
-    {
-        startingPos = transform.position;
-        maxTranslation = 0.5f;
-        rotationSpeed = 80f;
-    }
-
-    private void Update()
-    {
-        transform.position = startingPos + Vector3.up * maxTranslation * Mathf.Cos(Time.time);
-        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
-    }
 }

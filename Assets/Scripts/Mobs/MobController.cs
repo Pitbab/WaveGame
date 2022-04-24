@@ -110,20 +110,21 @@ public class MobController : PoolItem
         }
     }
 
-    public void TakeDamage(float amount, PlayerController Dealer)
+    public void TakeDamage(float amount, PlayerController dealer)
     {
         float hpLeft = localHealth -= amount;
 
         if (hpLeft <= 0)
         {
-            Dealer.SetCash(mobData.cashOnKill * GameController.instance.scoreMultiplier);
+            dealer.SetCash(mobData.cashOnKill * GameController.instance.scoreMultiplier);
             SpawnerManager.instance.RemoveMobFromCounter();
+            SpawnerManager.instance.SpawnPowerUp(transform.position);
             navMesh.enabled = false;
             Remove(); 
         }
         else
         {
-            Dealer.SetCash(mobData.cashOnTouched * GameController.instance.scoreMultiplier);
+            dealer.SetCash(mobData.cashOnTouched * GameController.instance.scoreMultiplier);
             localHealth = hpLeft;
             hpSlider.transform.localScale = new Vector3((localHealth / mobData.health) * hpStartingScale.x,
                 hpStartingScale.y, hpStartingScale.z);

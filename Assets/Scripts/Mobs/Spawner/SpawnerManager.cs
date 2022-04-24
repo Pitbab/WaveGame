@@ -3,18 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class SpawnerManager : MonoBehaviour
 {
-    public static SpawnerManager instance { get; private set; } 
+    public static SpawnerManager instance { get; private set; }
+    [SerializeField] private int PowerPercent;
     
     public MobPool mobPool {get; private set; }
     
     private List<Spawner> spawners = new List<Spawner>();
     public List<Spawner> availableSpawners = new List<Spawner>();
     [SerializeField] private List<GameObject> mobsPrefabs = new List<GameObject>();
+    [SerializeField] private List<GameObject> powerUpPrefabs = new List<GameObject>();
     public int numberAlive { get; private set; }
     private int currentSpawned;
     private int totalThisWave;
@@ -74,9 +77,12 @@ public class SpawnerManager : MonoBehaviour
         
     }
 
-    public void SpawnPowerUp()
+    public void SpawnPowerUp(Vector3 pos)
     {
-        
+        if (Random.Range(0, 100 / PowerPercent) == 0)
+        {
+            Instantiate(powerUpPrefabs[Random.Range(0, powerUpPrefabs.Count)], pos, quaternion.identity);
+        }
     }
 
     public void RemoveMobFromCounter()
