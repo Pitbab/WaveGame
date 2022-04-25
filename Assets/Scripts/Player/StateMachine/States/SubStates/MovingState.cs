@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovingState : GroundedState
 {
-    public MovingState(PlayerController playerController, StateMachine stateMachine, PlayerData playerData, string animationBool) : base(playerController, stateMachine, playerData, animationBool)
+    public MovingState(PlayerLogic playerLogic, StateMachine stateMachine, PlayerData playerData, string animationBool) : base(playerLogic, stateMachine, playerData, animationBool)
     {
     }
 
@@ -17,13 +17,13 @@ public class MovingState : GroundedState
     {
         base.LogicUpdate();
 
-        playerController.animator.SetFloat("x", movInput.x);
-        playerController.animator.SetFloat("y", movInput.y);
-        playerController.SetVel(movInput * playerData.speed * Time.deltaTime);
+        PlayerLogic.animator.SetFloat("x", movInput.x);
+        PlayerLogic.animator.SetFloat("y", movInput.y);
+        PlayerLogic.SetVel(movInput * playerData.speed * Time.deltaTime);
         
         if (movInput.magnitude == 0)
         {
-            stateMachine.ChangeState(playerController.idleState);
+            stateMachine.ChangeState(PlayerLogic.idleState);
         }
     }
 

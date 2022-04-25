@@ -9,7 +9,7 @@ public abstract class PowerUp : MonoBehaviour
     protected float maxTranslation;
     protected float rotationSpeed;
     
-    public virtual void TakePowerUp(PlayerController actor)
+    public virtual void TakePowerUp(PlayerLogic actor)
     {
         Destroy(gameObject);
     }
@@ -18,7 +18,7 @@ public abstract class PowerUp : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            TakePowerUp(other.gameObject.GetComponent<PlayerController>());
+            TakePowerUp(other.gameObject.GetComponent<PlayerLogic>());
         }
     }
 }

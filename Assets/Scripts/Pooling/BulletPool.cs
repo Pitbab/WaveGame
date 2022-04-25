@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class BulletPool : Pool
 {
-    public PlayerController owner { get; private set; }
+    public PlayerLogic owner { get; private set; }
 
     private void OnEnable()
     {
-        owner = transform.parent.Find("man_soldier").GetComponent<PlayerController>();
+        owner = transform.parent.Find("man_soldier").GetComponent<PlayerLogic>();
     }
 
     public void ShootABullet(Vector3 pos, Quaternion rot, GunData bulletInfo)

@@ -17,7 +17,7 @@ public class GunController : Interactible
     
     public bool isReloading { get; private set; }
     public bool isPickedUp;
-    private PlayerController owner;
+    private PlayerLogic owner;
 
     #region Animation variables
 
@@ -68,13 +68,14 @@ public class GunController : Interactible
         foreach (var choke in SpreadPattern)
         {
             owner.bulletPool.ShootABullet(choke.position, choke.rotation, gunData);
-            currentMag -= 1;
             owner.playerUi.SetGunMag(currentMag, currentReserve);
         }
+        
+        currentMag -= 1;
 
     }
 
-    public override void Interact(PlayerController actor)
+    public override void Interact(PlayerLogic actor)
     {
 
         if (!isPickedUp)

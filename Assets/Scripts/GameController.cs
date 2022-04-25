@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
     
     public static GameController instance { get; private set; }
 
-    public PlayerController player { get; private set; }
+    public PlayerLogic player { get; private set; }
 
     private const float preRoundTimer = 5f;
     private int currentWave = 0;
@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        player = FindObjectOfType<PlayerController>();
+        player = FindObjectOfType<PlayerLogic>();
 
         StartCoroutine(PreRound());
     }

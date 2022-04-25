@@ -11,7 +11,7 @@ public class Bullet : PoolItem
     private float currentActiveTime;
     private float damage;
 
-    private PlayerController owner;
+    private PlayerLogic owner;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();

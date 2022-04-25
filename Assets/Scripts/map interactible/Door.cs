@@ -11,9 +11,9 @@ public class Door : Interactible
     [SerializeField] private string Infos;
     [SerializeField] private List<Spawner> spawnerInRoom = new List<Spawner>();
 
-    private PlayerController currentPlayer;
+    private PlayerLogic currentPlayer;
 
-    public override void Interact(PlayerController actor)
+    public override void Interact(PlayerLogic actor)
     {
         base.Interact(actor);
 
@@ -41,7 +41,7 @@ public class Door : Interactible
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            currentPlayer = other.gameObject.GetComponent<PlayerController>();
+            currentPlayer = other.gameObject.GetComponent<PlayerLogic>();
             currentPlayer.playerUi.SetInfo(Infos);
         }
     }
@@ -54,7 +54,7 @@ public class Door : Interactible
         }
     }
 
-    private void RemoveText(PlayerController actor)
+    private void RemoveText(PlayerLogic actor)
     {
         actor.playerUi.SetInfo("");
     }

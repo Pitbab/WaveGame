@@ -38,7 +38,7 @@ public class PowerUpFullLife : PowerUp
     }
     
     
-    public override void TakePowerUp(PlayerController actor)
+    public override void TakePowerUp(PlayerLogic actor)
     {
         base.TakePowerUp(actor);
         actor.ChangeHp(actor.maxHealth);

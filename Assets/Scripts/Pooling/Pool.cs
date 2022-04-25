@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pool : MonoBehaviour
 {
-    [SerializeField] private PoolItem prefab = default;
+    [SerializeField] private PoolItem prefab;
     [SerializeField, Range(0, 20)] private int defaultSize = 0;
 
     private List<PoolItem> actives = new List<PoolItem>();

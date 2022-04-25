@@ -9,8 +9,9 @@ public class GroundedState : PlayerState
     protected bool canShoot;
     protected bool interaction;
     protected bool reloading;
+    protected bool camChange;
 
-    public GroundedState(PlayerController playerController, StateMachine stateMachine, PlayerData playerData, string animationBool) : base(playerController, stateMachine, playerData, animationBool) {}
+    public GroundedState(PlayerLogic playerLogic, StateMachine stateMachine, PlayerData playerData, string animationBool) : base(playerLogic, stateMachine, playerData, animationBool) {}
 
     public override void Enter()
     {
@@ -20,28 +21,34 @@ public class GroundedState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        movInput = playerController.playerInputHandler.movementInput;
-        mouseInput = playerController.playerInputHandler.mousePos;
-        canShoot = playerController.playerInputHandler.isShooting;
-        interaction = playerController.playerInputHandler.isInteracting;
-        reloading = playerController.playerInputHandler.isReloading;
+        movInput = PlayerLogic.playerInputHandler.movementInput;
+        mouseInput = PlayerLogic.playerInputHandler.mousePos;
+        canShoot = PlayerLogic.playerInputHandler.isShooting;
+        interaction = PlayerLogic.playerInputHandler.isInteracting;
+        reloading = PlayerLogic.playerInputHandler.isReloading;
+        camChange = PlayerLogic.playerInputHandler.isCamChanging;
 
         if (canShoot)
         {
-            playerController.Shoot();
+            PlayerLogic.Shoot();
         }
 
         if (interaction)
         {
-            playerController.Interact();
+            PlayerLogic.Interact();
         }
 
         if (reloading)
         {
-            playerController.Reload();
+            PlayerLogic.Reload();
+        }
+
+        if (camChange)
+        {
+            PlayerLogic.SwitchCamAngle();
         }
         
-        playerController.SetRot(mouseInput);
+        PlayerLogic.SetRot(mouseInput);
         
     }
 

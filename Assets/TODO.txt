@@ -89,6 +89,18 @@ start network
 
 - bug might need a service provider too limit coupling and ease the implementation of new feature
 
+* sunday april 24
+
+- post-process
+- power-up
+- cam switch
+- 3 types of gun
+
+//problematics at the end of the day
+
+bug navmesh agent need different path around the player
+
+
 
 
 

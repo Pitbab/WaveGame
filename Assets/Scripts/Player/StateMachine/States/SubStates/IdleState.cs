@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class IdleState : GroundedState
 {
-    public IdleState(PlayerController playerController, StateMachine stateMachine, PlayerData playerData, string animationBool) : base(playerController, stateMachine, playerData, animationBool)
+    public IdleState(PlayerLogic playerLogic, StateMachine stateMachine, PlayerData playerData, string animationBool) : base(playerLogic, stateMachine, playerData, animationBool)
     {
     }
 
     public override void Enter()
     {
         base.Enter();
-        playerController.SetVel(Vector2.zero);
+        PlayerLogic.SetVel(Vector2.zero);
     }
 
     public override void LogicUpdate()
@@ -20,7 +20,7 @@ public class IdleState : GroundedState
 
         if (movInput.magnitude != 0)
         {
-            stateMachine.ChangeState(playerController.movingState);
+            stateMachine.ChangeState(PlayerLogic.movingState);
         }
         
     }

@@ -14,10 +14,11 @@ public class MobController : PoolItem
     private float smallestDist;
     Transform bestTarget = null;
 
-    private PlayerController target;
+    private PlayerLogic target;
     private AnimationEvent attackEvent;
 
     private float timer;
+    private bool isDead;
 
     private float localHealth;
     public int cashOnTouched => mobData.cashOnTouched;
@@ -29,6 +30,7 @@ public class MobController : PoolItem
 
     private void Start()
     {
+        isDead = false;
         timer = 0;
         navMesh = GetComponent<NavMeshAgent>();
         ResetMob();
@@ -92,6 +94,7 @@ public class MobController : PoolItem
     {
         localHealth = mobData.health;
         hpSlider.transform.localScale = hpStartingScale;
+        isDead = false;
         //animator.SetBool("isAttacking,", false);
     }
 
@@ -104,23 +107,27 @@ public class MobController : PoolItem
         {
             if (col.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                col.gameObject.GetComponent<PlayerController>().ChangeHp(-mobData.attackDamage);
+                col.gameObject.GetComponent<PlayerLogic>().ChangeHp(-mobData.attackDamage);
                 Debug.Log("col with box");
             }
         }
     }
 
-    public void TakeDamage(float amount, PlayerController dealer)
+    public void TakeDamage(float amount, PlayerLogic dealer)
     {
         float hpLeft = localHealth -= amount;
 
         if (hpLeft <= 0)
         {
-            dealer.SetCash(mobData.cashOnKill * GameController.instance.scoreMultiplier);
-            SpawnerManager.instance.RemoveMobFromCounter();
-            SpawnerManager.instance.SpawnPowerUp(transform.position);
-            navMesh.enabled = false;
-            Remove(); 
+            if (!isDead)
+            {
+                isDead = true;
+                dealer.SetCash(mobData.cashOnKill * GameController.instance.scoreMultiplier);
+                SpawnerManager.instance.RemoveMobFromCounter();
+                SpawnerManager.instance.SpawnPowerUp(transform.position);
+                navMesh.enabled = false;
+                Remove(); 
+            }
         }
         else
         {

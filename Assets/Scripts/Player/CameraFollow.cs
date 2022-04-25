@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
@@ -10,8 +11,9 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float _followOffset = 0.0f;
     [SerializeField] private float _camOffset = -10.0f;
 
-
     private Vector3 _targetPos;
+
+
 
     void Start()
     {
@@ -25,4 +27,19 @@ public class CameraFollow : MonoBehaviour
 
         transform.position = _targetPos;
     }
+
+    public void SwitchCamAngle()
+    {
+        if (_camOffset != -10f)
+        {
+            transform.rotation = Quaternion.Euler(60f, 0f, 0f);
+            _camOffset = -10;
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+            _camOffset = 0;
+        }
+    }
+    
 }

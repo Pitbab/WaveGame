@@ -56,7 +56,7 @@ public class SpawnerManager : MonoBehaviour
     public void StartWave(int level)
     {
         currentSpawned = 0;
-        numberAlive = level * 1;
+        numberAlive = level * 100;
         totalThisWave = numberAlive;
         GameController.instance.player.playerUi.OnNumberAliveChange?.Invoke(EventID.Alive, numberAlive);
 

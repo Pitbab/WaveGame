@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 0.5
   ammoSize: 10
-  ammoDamage: 10
-  magCapacity: 0
+  ammoDamage: 50
+  magCapacity: 20
+  maxReserve: 300
+  reloadTime: 0.2
   ammoPrefab: {fileID: 8729129429281731706, guid: 8664d4442ddb31742a4db82287b8ff19, type: 3}

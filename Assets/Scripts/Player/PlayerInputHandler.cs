@@ -13,6 +13,7 @@ public class PlayerInputHandler : MonoBehaviour
     
     public bool isInteracting { get; private set; }
     public bool isReloading { get; private set; }
+    public bool isCamChanging { get; private set; }
 
     public PlayerInput playerInput;
 
@@ -54,6 +55,12 @@ public class PlayerInputHandler : MonoBehaviour
         isReloading = context.ReadValueAsButton();
     }
 
+    public void OnCamChange(InputAction.CallbackContext context)
+    {
+        isCamChanging = context.ReadValueAsButton();
+    }
+
+    public void UseSwitchCam() => isCamChanging = false;
     public void UseInteract() => isInteracting = false;
 
 

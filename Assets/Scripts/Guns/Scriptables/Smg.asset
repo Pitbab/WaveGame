@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 0.05
   ammoSize: 2
-  ammoDamage: 10
+  ammoDamage: 100
   magCapacity: 30
   maxReserve: 400
   reloadTime: 0.5
