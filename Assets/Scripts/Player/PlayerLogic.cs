@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
@@ -180,8 +181,45 @@ public class PlayerLogic : MonoBehaviour
         cam.GetComponent<CameraFollow>().SwitchCamAngle();
         playerInputHandler.UseSwitchCam();
     }
+
+    public void UseSpecialAttack()
+    {
+        StartCoroutine(SpecialAttack());
+        playerInputHandler.UseSpecialAttack();
+
+    }
     
     #endregion
+
+    private IEnumerator SpecialAttack()
+    {
+        GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        go.transform.position = transform.position;
+        go.layer = LayerMask.NameToLayer("NoMobs");
+        go.AddComponent<NavMeshObstacle>().carving = true;
+        go.GetComponent<MeshRenderer>().enabled = false;
+
+        go.transform.localScale = new Vector3(0, 0, 0);
+        Vector3 targetScale = new Vector3(10, 10, 10);
+
+        float timer = 0f;
+        float timeToScale = 0.2f;
+
+        
+        while (timer < timeToScale)
+        {
+            timer += Time.deltaTime;
+
+            float lerpValue = timer / timeToScale;
+            
+            go.transform.localScale = Vector3.Slerp(go.transform.localScale, targetScale, lerpValue);
+            yield return null;
+        }
+        
+        Destroy(go);
+        
+    }
+
 
     #region Other Functions
 

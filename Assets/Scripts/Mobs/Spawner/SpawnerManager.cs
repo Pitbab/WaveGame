@@ -11,6 +11,7 @@ public class SpawnerManager : MonoBehaviour
 {
     public static SpawnerManager instance { get; private set; }
     [SerializeField] private int PowerPercent;
+    [SerializeField] private int SpawnFactor;
     
     public MobPool mobPool {get; private set; }
     
@@ -56,7 +57,7 @@ public class SpawnerManager : MonoBehaviour
     public void StartWave(int level)
     {
         currentSpawned = 0;
-        numberAlive = level * 100;
+        numberAlive = level * SpawnFactor;
         totalThisWave = numberAlive;
         GameController.instance.player.playerUi.OnNumberAliveChange?.Invoke(EventID.Alive, numberAlive);
 

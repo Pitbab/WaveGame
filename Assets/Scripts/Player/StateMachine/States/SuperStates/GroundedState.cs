@@ -10,6 +10,7 @@ public class GroundedState : PlayerState
     protected bool interaction;
     protected bool reloading;
     protected bool camChange;
+    private bool specialAttack;
 
     public GroundedState(PlayerLogic playerLogic, StateMachine stateMachine, PlayerData playerData, string animationBool) : base(playerLogic, stateMachine, playerData, animationBool) {}
 
@@ -27,6 +28,7 @@ public class GroundedState : PlayerState
         interaction = PlayerLogic.playerInputHandler.isInteracting;
         reloading = PlayerLogic.playerInputHandler.isReloading;
         camChange = PlayerLogic.playerInputHandler.isCamChanging;
+        specialAttack = PlayerLogic.playerInputHandler.isSpecialAttack;
 
         if (canShoot)
         {
@@ -46,6 +48,11 @@ public class GroundedState : PlayerState
         if (camChange)
         {
             PlayerLogic.SwitchCamAngle();
+        }
+
+        if (specialAttack)
+        {
+            PlayerLogic.UseSpecialAttack();
         }
         
         PlayerLogic.SetRot(mouseInput);

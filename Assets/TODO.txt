@@ -100,6 +100,15 @@ start network
 
 bug navmesh agent need different path around the player
 
+* tuesday april 26
+
+- special attack first test
+- mob tweaking
+- camera angle transition fix
+
+//problematics at the end of the day
+
+bug need a better structure for player and mob (classes are getting big)
 
 
 

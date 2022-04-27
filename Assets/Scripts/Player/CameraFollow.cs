@@ -12,12 +12,18 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float _camOffset = -10.0f;
 
     private Vector3 _targetPos;
+    private quaternion topRot;
+    private quaternion isoRot;
+    private quaternion targetRot;
+    private const float rotSpeed = 1f;
 
 
 
     void Start()
     {
         _targetPos = transform.position;
+        topRot = transform.rotation;
+        isoRot = Quaternion.Euler(60f, 0f, 0f);
     }
 
     void Update()
@@ -26,18 +32,19 @@ public class CameraFollow : MonoBehaviour
         _targetPos.x = Mathf.Lerp(transform.position.x, _toFollow.position.x + _followOffset, Time.deltaTime * _followSpeed);
 
         transform.position = _targetPos;
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
     }
 
     public void SwitchCamAngle()
     {
         if (_camOffset != -10f)
         {
-            transform.rotation = Quaternion.Euler(60f, 0f, 0f);
+            targetRot = isoRot;
             _camOffset = -10;
         }
         else
         {
-            transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+            targetRot = topRot;
             _camOffset = 0;
         }
     }

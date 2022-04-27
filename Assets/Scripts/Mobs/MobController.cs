@@ -15,7 +15,6 @@ public class MobController : PoolItem
     Transform bestTarget = null;
 
     private PlayerLogic target;
-    private AnimationEvent attackEvent;
 
     private float timer;
     private bool isDead;
@@ -95,7 +94,6 @@ public class MobController : PoolItem
         localHealth = mobData.health;
         hpSlider.transform.localScale = hpStartingScale;
         isDead = false;
-        //animator.SetBool("isAttacking,", false);
     }
 
     public void Attack()
